@@ -6,6 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 
 import { getUsersAsync } from "../redux/actions/getUsersAsync";
+import { toggleModal } from "../redux/actions/toggleModal";
 import UserCard from "./UserCard.jsx";
 import ModalForm from "./ModalForm.jsx";
 
@@ -16,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     marginTop: "1em",
     marginLeft: "1em",
-    width: 370,
+    width: 384,
     backgroundColor: "#f8f9fd",
     boxShadow: "none",
     border: "2px dashed #e3e8ec",
@@ -29,32 +30,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Users = ({ users, getUsers }) => {
+const Users = ({ users, getUsers, open, closeModal }) => {
   useEffect(() => {
     getUsers();
   }, []);
 
-  const [open, setOpen] = React.useState(false);
+  // const [open, setOpen] = React.useState(false);
 
-  const handleOpen = () => {
-    setOpen(true);
-  };
+  // const handleOpen = () => {
+  //   return true
+  // };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  // const handleClose = () => {
+  //   return false
+  // };
 
   const classes = useStyles();
 
   return (
     <Grid container>
       {users.map((user, i) => (
-        <UserCard user={user} i={i} key={user._id} />
+        <UserCard user={user} i={i} key={user._id}/>
       ))}
-      <Card className={classes.card} onClick={handleOpen}>
+      <Card className={classes.card} onClick={closeModal}>
         <span className={classes.plus}>+</span>
       </Card>
-      <ModalForm open={open} handleClose={handleClose} />
+      <ModalForm open={open} handleClose={closeModal} />
     </Grid>
   );
 };
@@ -62,12 +63,14 @@ const Users = ({ users, getUsers }) => {
 const mapStateToProps = (state) => {
   return {
     users: state.getUsers,
+    open: state.toggleModal,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getUsers: () => dispatch(getUsersAsync()),
+    closeModal: () => dispatch(toggleModal()),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Users);

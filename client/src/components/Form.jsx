@@ -8,6 +8,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
 import { addUserAsync } from "../redux/actions/addUserAsync";
+import { toggleModal } from "../redux/actions/toggleModal";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -16,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     margin: "0",
     padding: "2em",
     borderRadius: "5px",
-    backgroundColor: "#fff"
+    backgroundColor: "#fff",
   },
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -27,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Form = ({ addUser }) => {
+const Form = ({ addUser, closeModal }) => {
   const [name, setName] = useState("");
   const [sirname, setSirname] = useState("");
   const [email, setEmail] = useState("");
@@ -38,6 +39,7 @@ const Form = ({ addUser }) => {
     setName("");
     setSirname("");
     setEmail("");
+    closeModal();
   };
 
   const classes = useStyles();
@@ -115,6 +117,7 @@ const Form = ({ addUser }) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     addUser: (user) => dispatch(addUserAsync(user)),
+    closeModal: () => dispatch(toggleModal()),
   };
 };
 
