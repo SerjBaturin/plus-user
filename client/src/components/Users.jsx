@@ -1,17 +1,18 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-
 import { getUsersAsync } from "../redux/actions/getUsersAsync";
+import UserCard from "./UserCard.jsx";
 
 const Users = ({ users, getUsers }) => {
   useEffect(() => {
     getUsers();
-    // console.log(users)
   }, []);
 
   return (
     <div className="users">
-      {users.map(user => <div key={user._id}>{user.name}</div>)}
+      {users.map((user) => (
+        <UserCard user={user} key={user._id}/>
+      ))}
     </div>
   );
 };
