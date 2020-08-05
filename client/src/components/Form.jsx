@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Form = ({ users, addUser }) => {
+const Form = ({ addUser }) => {
   const [name, setName] = useState("");
   const [sirname, setSirname] = useState("");
   const [email, setEmail] = useState("");
@@ -107,16 +107,9 @@ const Form = ({ users, addUser }) => {
             Создать
           </Button>
         </form>
-        {users}
       </div>
     </Container>
   );
-};
-
-const mapStateToProps = (state) => {
-  return {
-    users: state.getUsers,
-  };
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -125,4 +118,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Form);
+export default connect(null, mapDispatchToProps)(Form);
