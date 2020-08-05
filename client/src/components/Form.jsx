@@ -13,10 +13,11 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     display: "flex",
     flexDirection: "column",
-    marginTop: theme.spacing(8),
+    // marginTop: theme.spacing(8),
+    margin: "0",
     padding: "2em",
-    border: "1px solid #000",
     borderRadius: "5px",
+    backgroundColor: "#fff"
   },
   form: {
     width: "100%", // Fix IE 11 issue.

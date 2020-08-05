@@ -22,6 +22,20 @@ module.exports = {
         exclude: /node_modules/,
         loader: "babel-loader",
       },
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: "style-loader",
+          },
+          {
+            loader: "css-loader",
+            options: {
+              sourceMap: true,
+            },
+          },
+        ],
+      },
     ],
   },
 };
