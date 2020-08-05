@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
+import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+
+import { addUserAsync } from "../redux/actions/addUserAsync";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -24,7 +27,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Form() {
+const Form = ({ users, addUser }) => {
+  const [name, setName] = useState("");
+  const [sirname, setSirname] = useState("");
+  const [email, setEmail] = useState("");
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    addUser({ name, sirname, email });
+    setName("");
+    setSirname("");
+    setEmail("");
+  };
+
   const classes = useStyles();
 
   return (
@@ -33,7 +48,7 @@ export default function Form() {
         <Typography component="h1" variant="h6">
           Создание пользователя
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} onSubmit={submitHandler}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -45,6 +60,10 @@ export default function Form() {
                 id="firstName"
                 label="Имя"
                 autoFocus
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -56,6 +75,10 @@ export default function Form() {
                 label="Фамилия"
                 name="lastName"
                 autoComplete="lname"
+                value={sirname}
+                onChange={(e) => {
+                  setSirname(e.target.value);
+                }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -67,6 +90,10 @@ export default function Form() {
                 label="E-mail"
                 name="email"
                 autoComplete="email"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
               />
             </Grid>
           </Grid>
@@ -80,7 +107,22 @@ export default function Form() {
             Создать
           </Button>
         </form>
+        {users}
       </div>
     </Container>
   );
-}
+};
+
+const mapStateToProps = (state) => {
+  return {
+    users: state.getUsers,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addUser: (user) => dispatch(addUserAsync(user)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form);
