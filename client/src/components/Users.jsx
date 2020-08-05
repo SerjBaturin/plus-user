@@ -14,20 +14,17 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    marginLeft: "1em",
     marginTop: "1em",
-    padding: "0",
-    width: 280,
+    marginLeft: "1em",
+    width: 370,
     backgroundColor: "#f8f9fd",
     boxShadow: "none",
     border: "2px dashed #e3e8ec",
     cursor: "pointer",
   },
   plus: {
-    padding: "0",
-    margin: "0",
-    fontSize: "3.5em",
-    fontWeight: "bolder",
+    fontSize: "4.5em",
+    fontWeight: "400",
     color: "#e3e8ec",
   },
 }));
@@ -50,12 +47,12 @@ const Users = ({ users, getUsers }) => {
   const classes = useStyles();
 
   return (
-    <Grid container spacing={2}>
+    <Grid container>
       {users.map((user, i) => (
         <UserCard user={user} i={i} key={user._id} />
       ))}
       <Card className={classes.card} onClick={handleOpen}>
-        <h2 className={classes.plus}>+</h2>
+        <span className={classes.plus}>+</span>
       </Card>
       <ModalForm open={open} handleClose={handleClose} />
     </Grid>
